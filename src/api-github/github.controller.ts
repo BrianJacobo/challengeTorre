@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { GithubService } from './github.service';
 
 @Controller('github')
-export class GithubController {}
+export class GithubController {
+  constructor(private githubService: GithubService) {}
+
+  @Get()
+  getData() {
+    return this.githubService.getData();
+  }
+}
