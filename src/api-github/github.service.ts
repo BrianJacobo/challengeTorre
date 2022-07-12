@@ -7,7 +7,8 @@ import csv from 'csv-parser';
 export class GithubService {
   private arrayFiltered: Array<any> = [];
 
-  async getData() {
+  async getData(topNumber: number, language: string) {
+    console.log(typeof language);
     const results: Array<any> = [];
     fs.createReadStream('ranking.csv')
       .pipe(csv())
@@ -18,13 +19,15 @@ export class GithubService {
         const newResults = results.filter(
           (item) => item.language === 'JavaScript',
         );
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < topNumber; i++) {
           this.arrayFiltered.push(newResults[i]);
         }
         console.log('=====>', this.arrayFiltered);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-var
         var res = this.arrayFiltered;
+        return res;
       });
     console.log(this.arrayFiltered);
-    return res;
+    // return res;
   }
 }
