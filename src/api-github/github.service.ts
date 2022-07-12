@@ -10,7 +10,8 @@ export class GithubService {
   async getData(topNumber: number, language: string) {
     console.log(typeof language);
     const results: Array<any> = [];
-    fs.createReadStream('ranking.csv')
+    const respuesta = await fs
+      .createReadStream('ranking.csv', 'utf8')
       .pipe(csv())
       .on('data', (data) => results.push(data))
       .on('end', () => {
@@ -22,12 +23,10 @@ export class GithubService {
         for (let i = 0; i < topNumber; i++) {
           this.arrayFiltered.push(newResults[i]);
         }
-        console.log('=====>', this.arrayFiltered);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-var
-        var res = this.arrayFiltered;
-        return res;
+        console.log(this.arrayFiltered);
+        return this.arrayFiltered;
       });
-    console.log(this.arrayFiltered);
-    // return res;
+    // console.log(this.arrayFiltered);
+    return respuesta;
   }
 }
